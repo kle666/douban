@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星空电影</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='swiper/swiper-bundle.min.css')}}">
+    <script src="{{url_for('static', filename='swiper/swiper-bundle.min.js')}}"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="{{url_for('static', filename='pic/logo.png')}}" alt="星空电影logo">
+            </div>
+
+            {% if username %}
+            <div class="logined">
+                <div class="login-username">{{username}}</div>
+
+            </div>
+            {% else %}
+            <div class="entry">
+                <a href="./login">登录</a>
+                <a href="./register">注册</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="container">
+            <div class="main-title">正在热映</div>
+            <!-- 正在热映 -->
+            <div class="swiper my-swiper">
+                <div class="swiper-wrapper">
+                    {% for items in hoting %}
+                    <div class="swiper-slide">
+                        {% for movie in items %}
+                        <div class="my-swiper-item">
+                            <div class="start">{{movie['star'] or '0.0'}}</div>
+                            <img src="{{url_for('static', filename=movie['img'])}}" alt="{{movie['title']}}">
+                            <span>{{movie['title']}}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <!-- 最近热门电影 - 修改为与正在热映相同样式的轮播图 -->
+            <div class="main-title">最近热门电影</div>
+            <div class="swiper my-swiper">
+                <div class="swiper-wrapper">
+                    {% for items in hotmovie %}
+                    <div class="swiper-slide">
+                        {% for movie in items %}
+                        <div class="my-swiper-item">
+                            <div class="start">{{movie['rate'] or '0.0'}}</div>
+                            <img src="{{url_for('static', filename=movie['img'])}}" alt="{{movie['title']}}">
+                            <span>{{movie['title']}}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <!-- 最近热门电视剧 - 保持原来的样式 -->
+            <div class="main-title">最近热门电视剧</div>
+            <div class="swiper my-swiper hot tv">
+                <div class="swiper-wrapper">
+                    {% for items in hottv %}
+                    <div class="swiper-slide">
+                        {% for movie in items %}
+                        <div class="my-swiper-item">
+                            <div class="start">{{movie['rate'] or '0.0'}}</div>
+                            <img src="{{url_for('static', filename=movie['img'])}}" alt="{{movie['title']}}">
+                            <span>{{movie['title']}}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+
+</header>
+
+<!-- 一周口碑榜 -->
+<div class="week-rank">
+    <h3 class="week-rank-title">一周口碑榜</h3>
+    <ol>
+    {% for item in rank_week %}
+        <li>{{ item.id }}. {{ item.movie_name }}</li>
+    {% else %}
+        <li>暂无榜单数据</li>
+    {% endfor %}
+    </ol>
+</div>
+
+<div class="main">
+    <!-- 你的其他内容 -->
+</div>
+
+    <div class="message">
+        <div class="message-title">电影聊天室</div>
+        <div class="message-wrap">
+            <div class="message-list">
+                <div class="message-list-l">
+                    <img src="./static/pic/avater.jpg" alt="用户头像">
+                </div>
+                <div class="message-list-r">
+                    <div class="message-list-name">小明</div>
+                    <div class="message-list-content">你好！这部电影真的很不错。</div>
+                </div>
+            </div>
+            <div class="message-list me">
+                <div class="message-list-l">
+                    <img src="./static/pic/avater.jpg" alt="用户头像">
+                </div>
+                <div class="message-list-r">
+                    <div class="message-list-name">我自己</div>
+                    <div class="message-list-content">确实，剧情很吸引人。</div>
+                </div>
+            </div>
+        </div>
+        <div class="message-input">
+            <input type="text" placeholder="输入消息...">
+            <button>发送</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            星空电影 © 2005 - 2023 Start Movie, all rights reserved
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化所有Swiper滑块
+            const swipers = document.querySelectorAll('.swiper');
+            swipers.forEach(swiperEl => {
+                const isHot = swiperEl.classList.contains('hot');
+
+                new Swiper(swiperEl, {
+                    loop: true,
+                    navigation: {
+                        nextEl: swiperEl.querySelector('.swiper-button-next'),
+                        prevEl: swiperEl.querySelector('.swiper-button-prev'),
+                    },
+                    pagination: {
+                        el: swiperEl.querySelector('.swiper-pagination'),
+                        clickable: true,
+                    },
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                    breakpoints: {
+                        768: {
+                            slidesPerView: isHot ? 2 : 1,
+                            spaceBetween: 20
+                        },
+                        1024: {
+                            slidesPerView: isHot ? 1 : 1,
+                            spaceBetween: 30
+                        }
+                    }
+                });
+            });
+
+            // 获取一周口碑榜数据
+            fetch("./rank_week")
+                .then(res => res.json())
+                .then(data => {
+                    const weekRankEl = document.querySelector(".week-rank");
+                    // 清空现有内容（如果有）
+                    while (weekRankEl.children.length > 1) {
+                        weekRankEl.removeChild(weekRankEl.lastChild);
+                    }
+
+                    // 添加新内容
+                    data.forEach((item, index) => {
+                        const liEl = document.createElement("li");
+                        liEl.textContent = `${index + 1}. ${item.title}`;
+                        weekRankEl.appendChild(liEl);
+                    });
+                })
+                .catch(error => {
+                    console.error('获取一周口碑榜数据失败:', error);
+                });
+        });
+
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"
+            integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==">
+            crossorigin="anonymous"
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"
+        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+        crossorigin="anonymous">
+</script>
+<script type="text/javascript" charset="utf-8">
+    {% if username %}
+    const username = `{{username}}`;
+    {% else %}
+    const username = undefined;
+    {% endif %}
+
+    if (username) {
+        var socket = io();
+        socket.on('connect', function () {});
+
+        socket.on("msg", function (data) {
+            var itemEl = document.createElement("div");
+            if (data.user == username) {
+                itemEl.className = "message-list me";
+            } else {
+                itemEl.className = "message-list";
+            }
+
+
+            itemEl.innerHTML = `<div class="message-list-l">
+             <img src="/static/pic/avater.jpg" alt="">
+         </div>
+            <div class="message-list-r">
+                <div class="message-list-name">${data.user}</div>
+                <div class="message-list-content">${data.msg}</div>
+            </div>`;
+
+            document.querySelector(".message-wrap").appendChild(itemEi)
+        });
+
+        document.querySelector(".message-inputbutton").onclick = function () {
+            const userInput =document.querySelector("message-inpt input").value
+            socket.emit("msg", {"user": username,'msg': userInput})
+            document.querySelector(".message-input input").value = ""
+        }
+    }
+</script>
+
+</script>
+<!--    废案-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"-->
+<!--        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="-->
+<!--        crossorigin="anonymous"></script> <script type="text/javascript" charset="utf-8">-->
+<!--        {% if username %}-->
+<!--        const username = `{{username}}`-->
+<!--        {% else %}-->
+<!--        const username = undefined-->
+<!--        {% endif %}-->
+
+<!--        if(username) { var socket = io();-->
+<!--            socket.on('connect', function() { });-->
+<!--            socket.on("msg", function(data)-->
+<!--            { const itemEl = document.createElement("div")-->
+<!--                if(data.user == username) { itemEl.className = "message-list me" }-->
+<!--                else-->
+<!--                { itemEl.className = "message-list" }-->
+<!--                itemEl.innerHTML = ` <div class="message-list-l">-->
+<!--                <img src="/static/pic/avater.jpg" alt="" srcset="">-->
+<!--                </div>-->
+<!--                <div class="message-list-r"> <div class="message-list-name">${data.user}</div> <div class="message-list-content">${data.msg}</div> </div> ` document.querySelector(".message-wrap").appendChild(itemEl) }) document.querySelector(".message-input button").onclick = function() { const userInput = document.querySelector(".message-input input").value socket.emit("msg", {"user": username, 'msg': userInput}) document.querySelector(".message-input input").value = "" } } </script>-->
+</body>
+
+</html>
