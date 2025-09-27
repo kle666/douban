@@ -1,0 +1,238 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    width: 1000px;
+    margin: 0 auto;
+}
+/* header */
+.header{
+    padding: 20px 0;
+    border-bottom: 1px solid #ccc;
+}
+.header .container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header .logo{
+    width: 200px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.header .entry a{
+    margin-left: 20px;
+    border: 0;
+    background-color: #00aeec;
+    color: #fff;
+    padding: 10px 40px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+/* .main */
+.main-title{
+    border-left: 5px solid #ff6a6a;
+    padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin: 15px 0;
+}
+.my-swiper{
+}
+.my-swiper, .swiper-slide{
+    /* min-height: 259px; */
+    min-height: 287px;
+}
+.swiper-slide{
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.my-swiper-item{
+    width: 185px;
+    height: 259px;
+    position: relative;
+    overflow: hidden;
+}
+
+.my-swiper-item2{
+    width: 185px;
+    height: 259px;
+    position: relative;
+    overflow: hidden;
+}
+
+.my-swiper-item img{
+    width: 100%;
+    transition: all 0.5s;
+}
+.my-swiper-item:hover img{
+    transform: scale(1.5);
+}
+.my-swiper-item span{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 40px;
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ddd;
+    font-size: 14px;
+}
+.my-swiper-item .start{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    z-index: 99;
+    text-align: right;
+    padding: 4px 4px;
+    box-sizing: border-box;
+    color: #555;
+}
+.my-swiper-item .start::after{
+    content: '';
+    display: block;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-45deg) translate(40px, -15px);
+    background-color: #ffe500;
+    z-index: -1;
+}
+
+.my-siwper.hot .swiper-slide{
+    flex-wrap: wrap;
+}
+
+.my-siwper.hot .my-swiper-item{
+    margin-bottom: 20px;
+}
+
+.week-rank{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-100%, -50%);
+    margin-left: -520px;
+    z-index: 999;
+    text-align: right;
+    list-style: none;
+    width: 200px;
+}
+.week-rank li{
+    margin-bottom: 15px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+    white-space: nowrap;
+}
+.week-rank-title{
+    font-size: 34px;
+    margin-bottom: 20px;
+}
+
+.message{
+    width: 300px;
+    height: 500px;
+    border-radius: 10px;
+    position: fixed;
+    right: 30px;
+    bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    background: #f4f5f7;
+    border: 1px solid #d8d8d8;
+    overflow: hidden;
+    z-index: 9999;
+}
+.message-title{
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+    color: #000;
+}
+.message-list{
+    display: flex;
+    margin-bottom: 20px;
+}
+.message-list-l{
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 100%;
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+.message-list-r{
+    max-width: 70%;
+}
+.message-list-l img{
+    width: 100%;
+}
+.message-list-name{
+    margin-bottom: 10px;
+}
+.message-list-content{
+    background-color: #fff;
+    min-height: 37px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.message-wrap{
+    flex: 1;
+    border-bottom: 1px solid #d8d8d8;
+    padding: 15px;
+    overflow: auto;
+}
+.message-input{
+    height: 40px;
+    display: flex;
+}
+.message-input button{
+    border: 0;
+    background-color: #fff;
+    padding: 0 20px;
+    color: #000;
+    margin: 0;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.message-input input{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: 0;
+    padding: 0 10px;
+}
+
+.message-list.me{
+    flex-direction: row-reverse;
+}
+.message-list.me .message-list-name{
+    text-align: right;
+}
+.message-list.me .message-list-l{
+    margin-right: 0px;
+    margin-left: 10px;
+}
+
+.footer .container{
+    text-align: center;
+    font-size: 16px;
+    padding: 40px;
+    border-top: 1px solid #555;
+}
