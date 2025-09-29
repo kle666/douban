@@ -7,7 +7,7 @@
 运行爬虫: 在项目根目录 (包含 文件的目录) 下执行以下命令来运行指定的爬虫：scrapy.cfg
 # 确保虚拟环境已激活
  source venv/bin/activate 或 venv\Scripts\activate
-# 更改db。py中的password及database项
+# 更改db.py中的password及database项
 # 建立database对应的数据库，并导入douban.sql表单
 # 运行爬虫
 run douban。py
